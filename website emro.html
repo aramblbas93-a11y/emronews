@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ئەمرۆ نیوز — Emrô News</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─── THEME VARIABLES ─── */
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e2c06a;
+  --gold-pale: #f7edd0;
+  --navy: #0b1a3e;
+  --navy-mid: #122050;
+}
+
+body.light {
+  --bg: #faf8f2;
+  --bg2: #ffffff;
+  --bg3: #f0ece0;
+  --text: #111111;
+  --text-mid: #444;
+  --text-light: #888;
+  --border: #e0d8c3;
+  --header-bg: #ffffff;
+  --header-border: var(--gold);
+  --topbar-bg: var(--navy);
+  --topbar-text: var(--gold);
+  --card-bg: #ffffff;
+  --card-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  --tag-bg: var(--gold-pale);
+  --tag-text: var(--navy);
+  --hero-overlay: linear-gradient(to top, rgba(11,26,62,0.85) 0%, rgba(11,26,62,0.2) 100%);
+  --section-title: var(--navy);
+  --nav-text: var(--navy);
+  --nav-hover: var(--gold);
+  --footer-bg: var(--navy);
+  --footer-text: #ccc;
+}
+
+body.dark {
+  --bg: var(--navy);
+  --bg2: #0e2050;
+  --bg3: #091535;
+  --text: #f0e8d0;
+  --text-mid: #c8bfa0;
+  --text-light: #8a8070;
+  --border: #1e3060;
+  --header-bg: #091535;
+  --header-border: var(--gold);
+  --topbar-bg: #060f24;
+  --topbar-text: var(--gold);
+  --card-bg: #0e2050;
+  --card-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  --tag-bg: rgba(201,168,76,0.15);
+  --tag-text: var(--gold);
+  --hero-overlay: linear-gradient(to top, rgba(6,15,36,0.95) 0%, rgba(6,15,36,0.3) 100%);
+  --section-title: var(--gold);
+  --nav-text: #d0c8a8;
+  --nav-hover: var(--gold);
+  --footer-bg: #060f24;
+  --footer-text: #888;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+a { text-decoration: none; color: inherit; }
+img { display: block; width: 100%; }
+
+body {
+  font-family: 'Noto Sans Arabic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  direction: rtl;
+  line-height: 1.7;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ─── TOP BAR ─── */
+.topbar {
+  background: var(--topbar-bg);
+  color: var(--topbar-text);
+  font-size: 12px;
+  padding: 7px 0;
+}
+.topbar-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-socials { display: flex; gap: 18px; }
+.topbar-socials a { color: var(--gold); opacity: 0.7; font-size: 11px; letter-spacing: 1px; transition: opacity 0.2s; }
+.topbar-socials a:hover { opacity: 1; }
+
+/* Theme toggle */
+.theme-toggle {
+  background: none; border: 1px solid var(--gold); border-radius: 20px;
+  color: var(--gold); font-size: 11px; cursor: pointer;
+  padding: 3px 12px; font-family: inherit; transition: all 0.2s;
+}
+.theme-toggle:hover { background: var(--gold); color: var(--navy); }
+
+/* ─── HEADER ─── */
+header {
+  background: var(--header-bg);
+  border-bottom: 3px solid var(--gold);
+  padding: 18px 0 0;
+  transition: background 0.3s;
+}
+.header-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+.logo-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  padding-bottom: 16px; gap: 2px;
+}
+.logo-title {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 46px; font-weight: 700;
+  color: var(--navy); letter-spacing: -1px; line-height: 1;
+}
+body.dark .logo-title { color: var(--gold); }
+
+.logo-rule {
+  display: flex; align-items: center; gap: 10px; width: 260px; margin: 5px 0;
+}
+.logo-rule-line { flex: 1; height: 1.5px; background: var(--gold); }
+.logo-rule-sun { width: 28px; height: 28px; }
+
+.logo-sub {
+  font-size: 11px; letter-spacing: 5px; color: var(--gold); font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ─── NAV ─── */
+nav {
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+.nav-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 0; align-items: center;
+}
+.nav-inner a {
+  color: var(--nav-text); font-size: 13.5px; font-weight: 600;
+  padding: 12px 18px; display: block; border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  letter-spacing: 0.03em;
+}
+.nav-inner a:hover, .nav-inner a.active {
+  color: var(--gold); border-bottom-color: var(--gold);
+}
+.nav-inner a.breaking {
+  color: #e03030; margin-right: auto;
+}
+body.dark .nav-inner a.breaking { color: #ff6060; }
+
+/* ─── BREAKING TICKER ─── */
+.ticker {
+  background: var(--gold); color: var(--navy);
+  font-size: 13px; font-weight: 700; padding: 8px 0; overflow: hidden;
+}
+.ticker-inner { display: flex; align-items: center; }
+.ticker-label {
+  background: var(--navy); color: var(--gold);
+  padding: 0 18px; white-space: nowrap; font-size: 12px;
+  letter-spacing: 1px; flex-shrink: 0; height: 100%;
+  display: flex; align-items: center;
+}
+.ticker-track {
+  display: flex; gap: 60px; animation: ticker 35s linear infinite;
+  padding-right: 60px;
+}
+.ticker-track span { white-space: nowrap; }
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── LAYOUT ─── */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+/* ─── HERO ─── */
+.hero { margin: 28px 0; }
+.hero-grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
+
+.hero-main {
+  position: relative; border-radius: 4px; overflow: hidden;
+  min-height: 460px; cursor: pointer;
+  background: linear-gradient(135deg, var(--navy) 0%, #1a3070 100%);
+}
+.hero-main-img {
+  width: 100%; height: 100%; object-fit: cover;
+  position: absolute; inset: 0; opacity: 0.5;
+}
+.hero-main-body {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 32px; background: var(--hero-overlay);
+}
+.hero-tag {
+  display: inline-block; background: var(--gold);
+  color: var(--navy); font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 2px; letter-spacing: 1px; margin-bottom: 12px;
+}
+.hero-main h1 {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 28px; font-weight: 700; color: #fff;
+  line-height: 1.4; margin-bottom: 10px;
+}
+.hero-main .meta { color: rgba(255,255,255,0.6); font-size: 12px; }
+
+.hero-side { display: flex; flex-direction: column; gap: 12px; }
+
+.hero-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 4px; overflow: hidden; display: flex;
+  gap: 0; cursor: pointer; transition: box-shadow 0.2s;
+  box-shadow: var(--card-shadow);
+}
+.hero-card:hover { box-shadow: 0 4px 20px rgba(201,168,76,0.2); }
+.hero-card-img { width: 100px; height: 80px; object-fit: cover; flex-shrink: 0; background: var(--bg3); }
+.hero-card-body { padding: 10px 12px; flex: 1; }
+.hero-card-body .tag { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 1px; margin-bottom: 4px; }
+.hero-card-body h3 { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4; }
+.hero-card-body .time { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+
+/* ─── SECTION ─── */
+.section { margin: 36px 0; }
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px; border-bottom: 2px solid var(--gold); padding-bottom: 10px;
+}
+.section-header h2 {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 22px; font-weight: 700; color: var(--section-title);
+}
+.section-header a { font-size: 12px; color: var(--gold); letter-spacing: 0.5px; }
+
+/* ─── NEWS GRID ─── */
+.news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+.news-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 4px; overflow: hidden; cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--card-shadow);
+}
+.news-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(201,168,76,0.18); }
+
+.news-card-img {
+  height: 160px; background: var(--bg3);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
+}
+.news-card-img .placeholder-icon { font-size: 36px; opacity: 0.25; }
+.news-card-img .cat-bar {
+  position: absolute; bottom: 0; right: 0;
+  background: var(--gold); color: var(--navy);
+  font-size: 10px; font-weight: 700; padding: 3px 10px; letter-spacing: 1px;
+}
+
+.news-card-body { padding: 14px 16px 16px; }
+.news-card-body h3 {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 15px; font-weight: 600; color: var(--text);
+  line-height: 1.5; margin-bottom: 8px;
+}
+.news-card-body p { font-size: 12.5px; color: var(--text-mid); line-height: 1.6; }
+.news-card-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border);
+}
+.news-card-footer .time { font-size: 11px; color: var(--text-light); }
+.news-card-footer .read-more { font-size: 11px; color: var(--gold); font-weight: 600; }
+
+/* ─── FEATURED 3-COL ─── */
+.featured-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 20px; }
+
+.feat-main {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 4px; overflow: hidden; cursor: pointer;
+  box-shadow: var(--card-shadow);
+}
+.feat-main-img {
+  height: 240px; background: linear-gradient(135deg, var(--navy) 0%, #1a3070 100%);
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.feat-main-img .placeholder-icon { font-size: 52px; opacity: 0.2; color: #fff; }
+.feat-main-body { padding: 18px 20px; }
+.feat-main-body h3 {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.5;
+}
+.feat-main-body p { font-size: 13px; color: var(--text-mid); margin-top: 8px; line-height: 1.6; }
+
+.feat-list { display: flex; flex-direction: column; gap: 14px; }
+.feat-item {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 4px; padding: 14px; cursor: pointer;
+  transition: border-color 0.2s;
+}
+.feat-item:hover { border-color: var(--gold); }
+.feat-item .tag { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 1px; margin-bottom: 6px; }
+.feat-item h3 { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.5; }
+.feat-item .time { font-size: 11px; color: var(--text-light); margin-top: 6px; }
+
+/* ─── OPINION / WIDE STRIP ─── */
+.strip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.strip-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 4px; padding: 20px; cursor: pointer;
+  border-right: 4px solid var(--gold);
+  transition: box-shadow 0.2s;
+}
+.strip-card:hover { box-shadow: 0 4px 18px rgba(201,168,76,0.15); }
+.strip-card .author { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.strip-card .author-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--gold-pale); display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; color: var(--navy); flex-shrink: 0;
+}
+body.dark .strip-card .author-avatar { background: rgba(201,168,76,0.2); color: var(--gold); }
+.strip-card .author-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.strip-card .author-title { font-size: 11px; color: var(--text-light); }
+.strip-card h3 { font-size: 14.5px; font-weight: 600; color: var(--text); line-height: 1.5; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  margin-top: 60px; padding: 48px 0 24px;
+  border-top: 3px solid var(--gold);
+}
+.footer-grid {
+  max-width: 1280px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+}
+.footer-brand .brand-name {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 12px;
+}
+.footer-brand p { font-size: 13px; line-height: 1.7; max-width: 280px; }
+.footer-col h4 { font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 1px; margin-bottom: 14px; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 8px; }
+.footer-col ul li a { font-size: 13px; color: var(--footer-text); transition: color 0.2s; }
+.footer-col ul li a:hover { color: var(--gold); }
+.footer-bottom {
+  max-width: 1280px; margin: 36px auto 0; padding: 20px 24px 0;
+  border-top: 1px solid rgba(201,168,76,0.2);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--footer-text);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .news-grid { grid-template-columns: repeat(2, 1fr); }
+  .featured-grid { grid-template-columns: 1fr; }
+  .strip-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .news-grid { grid-template-columns: 1fr; }
+  .strip-grid { grid-template-columns: 1fr; }
+  .nav-inner a { padding: 10px 10px; font-size: 12px; }
+  .logo-title { font-size: 34px; }
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── FADE IN ─── */
+.section, .hero { animation: fadeUp 0.6s ease both; }
+.section:nth-child(2) { animation-delay: 0.1s; }
+.section:nth-child(3) { animation-delay: 0.2s; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body class="light">
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="date">📅 یەکشەممە، ٢٤ی شوبات ٢٠٢٦</span>
+    <div class="topbar-socials">
+      <a href="#">تێلێگرام</a>
+      <a href="#">ئینستاگرام</a>
+      <a href="#">یوتیوب</a>
+      <a href="#">ئێکس</a>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 شێوازی شەو</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <div class="logo-title">ئەمرۆ نیوز</div>
+      <div class="logo-rule">
+        <div class="logo-rule-line"></div>
+        <!-- Kurdish Sun SVG -->
+        <svg class="logo-rule-sun" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(17.14 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(34.28 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(51.43 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(68.57 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(85.71 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(102.86 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(120 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(137.14 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(154.29 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(171.43 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(188.57 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(205.71 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(222.86 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(240 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(257.14 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(274.29 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(291.43 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(308.57 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(325.71 50 50)"/>
+          <line x1="50" y1="50" x2="50" y2="10" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" transform="rotate(342.86 50 50)"/>
+          <circle cx="50" cy="50" r="14" fill="#c9a84c"/>
+          <circle cx="50" cy="50" r="8" fill="currentColor" class="sun-hole"/>
+        </svg>
+        <div class="logo-rule-line"></div>
+      </div>
+      <div class="logo-sub">Emrô News</div>
+    </div>
+
+    <!-- NAV -->
+    <nav>
+      <div class="nav-inner">
+        <a href="#" class="active">سەرەکی</a>
+        <a href="#">سیاسەت</a>
+        <a href="#">تەکنەلۆژیا</a>
+        <a href="#">ئابووری</a>
+        <a href="#">جیهانی</a>
+        <a href="#" class="breaking">🔴 نوێترین</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- BREAKING NEWS TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <div class="ticker-label">🔴 دوا هەواڵ</div>
+    <div class="ticker-track">
+      <span>پەرلەمانی کوردستان دانیشتنی نائاساییی بۆ مانگی داهاتوو دیاری کرد</span>
+      <span>•</span>
+      <span>باخچەی داراییەکانی جیهان لە ئەمریکا سەرکەوتووانە دەستپێکردووە</span>
+      <span>•</span>
+      <span>کۆمپانیای ئەپڵ مۆبایلێکی نوێی بانگەشە دەکات لە میوانگەی تایبەت</span>
+      <span>•</span>
+      <span>نەتەوە یەکگرتووەکان غەمخۆری خۆی دەربارەی دۆخی ئێران دەرباز کرد</span>
+      <span>•</span>
+      <span>پەرلەمانی کوردستان دانیشتنی نائاساییی بۆ مانگی داهاتوو دیاری کرد</span>
+      <span>•</span>
+      <span>باخچەی داراییەکانی جیهان لە ئەمریکا سەرکەوتووانە دەستپێکردووە</span>
+      <span>•</span>
+      <span>کۆمپانیای ئەپڵ مۆبایلێکی نوێی بانگەشە دەکات لە میوانگەی تایبەت</span>
+      <span>•</span>
+      <span>نەتەوە یەکگرتووەکان غەمخۆری خۆی دەربارەی دۆخی ئێران دەرباز کرد</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-grid">
+      <!-- Main hero -->
+      <div class="hero-main">
+        <div class="hero-main-img" style="background: linear-gradient(135deg, #0b1a3e 0%, #1a4080 100%);"></div>
+        <div class="hero-main-body">
+          <span class="hero-tag">سیاسەت</span>
+          <h1>دانیشتنی مەجلیسی نوێنەرانی کوردستان — ئایا یاساکانی نوێ داواکاری گەلەکەمانی بەرپرسانە؟</h1>
+          <div class="meta">ئەمرۆ نیوز &nbsp;·&nbsp; ٢ کاتژمێر لەمەوبەر</div>
+        </div>
+      </div>
+
+      <!-- Side cards -->
+      <div class="hero-side">
+        <div class="hero-card">
+          <div class="hero-card-img" style="background: linear-gradient(135deg, #1a3060 0%, #2a4080 100%);"></div>
+          <div class="hero-card-body">
+            <div class="tag">تەکنەلۆژیا</div>
+            <h3>ئەپڵ دەیخوازێت کارمەندەکانی بگەڕێتەوە بۆ ئۆفیس</h3>
+            <div class="time">١ کاتژمێر لەمەوبەر</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-img" style="background: linear-gradient(135deg, #1a4a20 0%, #2a6030 100%);"></div>
+          <div class="hero-card-body">
+            <div class="tag">ئابووری</div>
+            <h3>نرخی نەوتی جیهانی دووبارە سەر بە ١٠٠ دۆلار</h3>
+            <div class="time">٣ کاتژمێر لەمەوبەر</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-img" style="background: linear-gradient(135deg, #3a1a10 0%, #6a3020 100%);"></div>
+          <div class="hero-card-body">
+            <div class="tag">جیهانی</div>
+            <h3>ئەمریکا نامەی تازەی دیپلۆماسی بۆ ئێران دەنێرێت</h3>
+            <div class="time">٤ کاتژمێر لەمەوبەر</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-img" style="background: linear-gradient(135deg, #2a1a40 0%, #4a2a70 100%);"></div>
+          <div class="hero-card-body">
+            <div class="tag">سیاسەت</div>
+            <h3>ئەنقەرە و بەغدا لە بارەی دەمارگیریی ئاو دانوستانی دەکەن</h3>
+            <div class="time">٥ کاتژمێر لەمەوبەر</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIYASET SECTION -->
+  <div class="section">
+    <div class="section-header">
+      <h2>⚖️ سیاسەت</h2>
+      <a href="#">هەموو هەواڵەکان ←</a>
+    </div>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #0b1a3e, #1e3a70);">
+          <span class="placeholder-icon">🏛️</span>
+          <div class="cat-bar">سیاسەت</div>
+        </div>
+        <div class="news-card-body">
+          <h3>ئەنجوومەنی وەزیرانی کوردستان پلانی ئابووری نوێ دەرکرد</h3>
+          <p>حکوومەتی هەرێم دەست بە جێبەجێکردنی پڕۆژەی گەشەپێدانی کارگێڕی دەکات...</p>
+          <div class="news-card-footer">
+            <span class="time">٤ساعات لەمەوبەر</span>
+            <span class="read-more">زیاتر بخوێنەوە</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #1a0b3e, #3e1a70);">
+          <span class="placeholder-icon">🤝</span>
+          <div class="cat-bar">سیاسەت</div>
+        </div>
+        <div class="news-card-body">
+          <h3>کۆبوونەوەی پارتەکانی کوردستان دەربارەی ئەنجامی ئەنتەخابات</h3>
+          <p>نوێنەرایەتی پارتە سیاسییەکانی کوردستان دانیشتنێکی تایبەتیان ئەنجامدا...</p>
+          <div class="news-card-footer">
+            <span class="time">٦ساعات لەمەوبەر</span>
+            <span class="read-more">زیاتر بخوێنەوە</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #0b2e1a, #1a5a2a);">
+          <span class="placeholder-icon">🗳️</span>
+          <div class="cat-bar">سیاسەت</div>
+        </div>
+        <div class="news-card-body">
+          <h3>بغداد ئاماژە بە گفتوگۆی نوێ دەربارەی بوجەی کوردستان دەدات</h3>
+          <p>ئەرکدارانی حکوومەتی فیدرالی ئامادەی کۆبوونەوەن بۆ چارەسەرکردنی...</p>
+          <div class="news-card-footer">
+            <span class="time">٨ساعات لەمەوبەر</span>
+            <span class="read-more">زیاتر بخوێنەوە</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #2e1a0b, #6a3a10);">
+          <span class="placeholder-icon">📜</span>
+          <div class="cat-bar">سیاسەت</div>
+        </div>
+        <div class="news-card-body">
+          <h3>ئەمریکا پشتگیری خۆی لە دیمۆکراسی کوردستان دەرباز دەکات</h3>
+          <p>باڵیۆزخانەی ئەمریکا لە بەغدا بەیانیەکی دەرکرد لەبارەی پرۆسەی سیاسی...</p>
+          <div class="news-card-footer">
+            <span class="time">١٢ساعات لەمەوبەر</span>
+            <span class="read-more">زیاتر بخوێنەوە</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH SECTION -->
+  <div class="section">
+    <div class="section-header">
+      <h2>💻 تەکنەلۆژیا</h2>
+      <a href="#">هەموو هەواڵەکان ←</a>
+    </div>
+    <div class="featured-grid">
+      <div class="feat-main">
+        <div class="feat-main-img">
+          <span class="placeholder-icon">🤖</span>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 18px;background:linear-gradient(to top,rgba(11,26,62,0.9),transparent);">
+            <span style="background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;padding:2px 8px;border-radius:2px;">تەکنەلۆژیا</span>
+          </div>
+        </div>
+        <div class="feat-main-body">
+          <h3>زیرەکی دەستکرد ئایا بەراورد دەکرێت لەگەڵ ئەزموونی مرۆڤایی — تاقیکردنەوەی نوێ ئەمەی دەردەخات</h3>
+          <p>تیمێکی لێکۆڵینەوەی گووگڵ ئەنجامی تاقیکردنەوەیەکی گرنگیان بڵاوکردەوە کە نیشانی دەدات...</p>
+        </div>
+      </div>
+      <div class="feat-list">
+        <div class="feat-item">
+          <div class="tag">تەکنەلۆژیا</div>
+          <h3>ئەپڵ ماکی نوێی خۆی بە پرۆسێسەری M4 بانگەشە دەکات</h3>
+          <div class="time">٣ساعات لەمەوبەر</div>
+        </div>
+        <div class="feat-item">
+          <div class="tag">تەکنەلۆژیا</div>
+          <h3>مایکرۆسۆفت مامەڵەی ئەی‌ئای لە ئۆفیس زیاتر دەکات</h3>
+          <div class="time">٥ساعات لەمەوبەر</div>
+        </div>
+        <div class="feat-item">
+          <div class="tag">تەکنەلۆژیا</div>
+          <h3>ئینتەرنێتی فەزایی ستارلینک گەیشتە هەرێمی کوردستان</h3>
+          <div class="time">٧ساعات لەمەوبەر</div>
+        </div>
+        <div class="feat-item">
+          <div class="tag">تەکنەلۆژیا</div>
+          <h3>ئیلۆن ماسک بە X دەخوازێت شوێنی بانکەکان بگرێت</h3>
+          <div class="time">٩ساعات لەمەوبەر</div>
+        </div>
+      </div>
+      <div class="feat-list">
+        <div class="feat-item">
+          <div class="tag">تەکنەلۆژیا</div>
+          <h3>سامسوڕ مۆبایلی نوێی کلاپابڵی خۆی ئاشکرا دەکات</h3>
+          <div class="time">٢ساعات لەمەوبەر</div>
+        </div>
+        <div class="feat-item">
+          <div class="tag">تەکنەلۆژیا</div>
+          <h3>مەتا ئەی‌ئایی پیشرەفتووتری خۆی بۆ وئاتسئاپ دەزانێت</h3>
+          <div class="time">٦ساعات لەمەوبەر</div>
+        </div>
+        <div class="feat-item">
+          <div class="tag">تەکنەلۆژیا</div>
+          <h3>سایبەر ئەمنیەت لە هەرێمی کوردستان پەیوەندییەکی تازەی دروستدەکات</h3>
+          <div class="time">١٠ساعات لەمەوبەر</div>
+        </div>
+        <div class="feat-item">
+          <div class="tag">تەکنەلۆژیا</div>
+          <h3>نینتەندۆ سویچ ٢ ئامادەیە بۆ دەرکردن لە ئەیار</h3>
+          <div class="time">١٢ساعات لەمەوبەر</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABWURI SECTION -->
+  <div class="section">
+    <div class="section-header">
+      <h2>📈 ئابووری</h2>
+      <a href="#">هەموو هەواڵەکان ←</a>
+    </div>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #1a2e0b, #3a5a10);">
+          <span class="placeholder-icon">💰</span>
+          <div class="cat-bar">ئابووری</div>
+        </div>
+        <div class="news-card-body">
+          <h3>بانکی مەرکەزی عێراق ڕێژەی بەرادێزی دۆلار گۆڕی</h3>
+          <p>لەپێی ئاماژەی بانکی مەرکەزی، نرخی تیری دۆلاری ئەمریکی گۆڕانکاری تازەی...</p>
+          <div class="news-card-footer">
+            <span class="time">٢ساعات لەمەوبەر</span>
+            <span class="read-more">زیاتر بخوێنەوە</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #0b2a1a, #1a5a3a);">
+          <span class="placeholder-icon">🏦</span>
+          <div class="cat-bar">ئابووری</div>
+        </div>
+        <div class="news-card-body">
+          <h3>گەشەی ١٢٪ی ئابووری کوردستان لە ساڵی ٢٠٢٥</h3>
+          <p>ڕاپۆرتی ئابووری نوێ نیشانی دەدات کە هەرێمی کوردستان یەکێکە لەو...</p>
+          <div class="news-card-footer">
+            <span class="time">٤ساعات لەمەوبەر</span>
+            <span class="read-more">زیاتر بخوێنەوە</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #2e2a0b, #6a5a10);">
+          <span class="placeholder-icon">🛢️</span>
+          <div class="cat-bar">ئابووری</div>
+        </div>
+        <div class="news-card-body">
+          <h3>ئۆپێک+ لە مانگی داهاتوودا بەرهەمهێنانی نەوتی زیاد دەکات</h3>
+          <p>دانیشتنی دوایین ئۆپێک پلەس بڕیاری زیادکردنی بەرهەمهێنانی ڕۆژانە دایە...</p>
+          <div class="news-card-footer">
+            <span class="time">٦ساعات لەمەوبەر</span>
+            <span class="read-more">زیاتر بخوێنەوە</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #1a0b2e, #3a1a5a);">
+          <span class="placeholder-icon">📊</span>
+          <div class="cat-bar">ئابووری</div>
+        </div>
+        <div class="news-card-body">
+          <h3>بازاڕی سەندوقی کوردستان ئەمساڵ ١٨٪ سەرکەوتووانەبوو</h3>
+          <p>لە پشتکووتی ئاسایی سالانەی بازاڕی دارایی، کوردستان ئاستێکی باشی...</p>
+          <div class="news-card-footer">
+            <span class="time">٨ساعات لەمەوبەر</span>
+            <span class="read-more">زیاتر بخوێنەوە</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JIHANI SECTION -->
+  <div class="section">
+    <div class="section-header">
+      <h2>🌍 جیهانی</h2>
+      <a href="#">هەموو هەواڵەکان ←</a>
+    </div>
+    <div class="strip-grid">
+      <div class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #2e0b0b, #6a1010);">
+          <span class="placeholder-icon">🌐</span>
+          <div class="cat-bar">جیهانی</div>
+        </div>
+        <div class="news-card-body">
+          <h3>سەرۆکی فەرەنسا سەردانی تورکیا دەکات بۆ گفتوگۆی دیپلۆماسی</h3>
+          <p>ماکرۆن و ئەردوغان دانیشتنێکی دووقەرەی ئەنجامدان دەربارەی ئاسایشی ناوچەیی...</p>
+          <div class="news-card-footer">
+            <span class="time">٣ساعات لەمەوبەر</span>
+            <span class="read-more">زیاتر بخوێنەوە</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #0b1a2e, #10305a);">
+          <span class="placeholder-icon">🇺🇳</span>
+          <div class="cat-bar">جیهانی</div>
+        </div>
+        <div class="news-card-body">
+          <h3>نەتەوە یەکگرتووەکان ئامادەی بینینی تۆسی ئاسایشی دانیشتووانە</h3>
+          <p>ئەنجوومەنی ئاسایشی نەتەوە یەکگرتووەکان دانیشتنێکی نائاساییی گرتە بەر...</p>
+          <div class="news-card-footer">
+            <span class="time">٥ساعات لەمەوبەر</span>
+            <span class="read-more">زیاتر بخوێنەوە</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img" style="background: linear-gradient(135deg, #1a2e0b, #2a5010);">
+          <span class="placeholder-icon">✈️</span>
+          <div class="cat-bar">جیهانی</div>
+        </div>
+        <div class="news-card-body">
+          <h3>ئەمریکا پلانی دەرکردنی سەندوقی نوێ بۆ خاوەنداری هەرپاشی دەخات</h3>
+          <p>ئیدارەی بایدن دەستی بە کارکردن لەسەر پرۆژەی بودجەی تایبەت دا...</p>
+          <div class="news-card-footer">
+            <span class="time">٧ساعات لەمەوبەر</span>
+            <span class="read-more">زیاتر بخوێنەوە</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="brand-name">ئەمرۆ نیوز</div>
+      <p>ئەمرۆ نیوز سەرچاوەیەکی سەربەخۆی هەواڵه بۆ گەلی کوردستان. هەواڵی ڕاستەقینەو دروست بۆ خوێنەرانمان دەگەیەنین.</p>
+    </div>
+    <div class="footer-col">
+      <h4>بەشەکان</h4>
+      <ul>
+        <li><a href="#">سیاسەت</a></li>
+        <li><a href="#">تەکنەلۆژیا</a></li>
+        <li><a href="#">ئابووری</a></li>
+        <li><a href="#">جیهانی</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>بەستەرەکان</h4>
+      <ul>
+        <li><a href="#">دەربارەمان</a></li>
+        <li><a href="#">پەیوەندی</a></li>
+        <li><a href="#">ڕێسای بەکارهێنان</a></li>
+        <li><a href="#">تایبەتمەندی</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>میدیای کۆمەڵایەتی</h4>
+      <ul>
+        <li><a href="#">تێلێگرام</a></li>
+        <li><a href="#">ئینستاگرام</a></li>
+        <li><a href="#">یوتیوب</a></li>
+        <li><a href="#">ئێکس (تویتەر)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© ٢٠٢٦ ئەمرۆ نیوز — هەموو مافێکی پارێزراوە</span>
+    <span style="color: var(--gold);">Emrô News</span>
+  </div>
+</footer>
+
+<script>
+  // Fix sun hole color per theme
+  function updateSunHole() {
+    const isDark = document.body.classList.contains('dark');
+    document.querySelectorAll('.sun-hole').forEach(el => {
+      el.setAttribute('fill', isDark ? '#091535' : '#faf8f2');
+    });
+  }
+
+  function toggleTheme() {
+    const body = document.body;
+    const btn = document.querySelector('.theme-toggle');
+    if (body.classList.contains('light')) {
+      body.classList.replace('light', 'dark');
+      btn.textContent = '☀️ شێوازی ڕۆژ';
+    } else {
+      body.classList.replace('dark', 'light');
+      btn.textContent = '🌙 شێوازی شەو';
+    }
+    updateSunHole();
+  }
+
+  updateSunHole();
+</script>
+</body>
+</html>
